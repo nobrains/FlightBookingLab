@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.verification.VerificationMode;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -31,6 +32,8 @@ import static org.powermock.api.mockito.PowerMockito.*;
 @PrepareForTest({FlightBookingController.class, Airports.class, RoutePlannerFactory.class})
 public class FlightBookingControllerTest {
 
+    private static final String DELHI = "del";
+    private static final String BOMBAY = "bom";
     @Mock
     private RoutePlanner routePlanner;
     private FlightBookingController bookingController = new FlightBookingController();
@@ -41,9 +44,9 @@ public class FlightBookingControllerTest {
 
     @BeforeClass
     public static void initialize() {
-        delhiAirport = new Airport("del");
+        delhiAirport = new Airport(DELHI);
         delhiAirport.setOutgoingAirports(delhiOutgoingAirports);
-        bombayAirport = new Airport("bom");
+        bombayAirport = new Airport(BOMBAY);
         bombayAirport.setOutgoingAirports(bombayOutgoingAirports);
         bombayOutgoingAirports.add(delhiAirport);
         delhiOutgoingAirports.add(bombayAirport);
@@ -53,40 +56,40 @@ public class FlightBookingControllerTest {
     public void setUp() throws AirportNotFoundException {
         mockStatic(Airports.class);
         mockStatic(RoutePlannerFactory.class);
-        when(Airports.getAirport("bom")).thenReturn(bombayAirport);
-        when(Airports.getAirport("del")).thenReturn(delhiAirport);
+        when(Airports.getAirport(BOMBAY)).thenReturn(bombayAirport);
+        when(Airports.getAirport(DELHI)).thenReturn(delhiAirport);
         when(RoutePlannerFactory.getRoutePlanner(RoutePlannerType.SHORTEST)).thenReturn(routePlanner);
     }
 
     @Test
     public void shouldCallRoutePlannerFactoryForAppropriatePlannerImplementation() throws RouteNotFoundException, AirportNotFoundException {
-        bookingController.getShortestRoute("bom", "del");
-        verifyStatic(times(1));
+        bookingController.getShortestRoute(BOMBAY, DELHI);
+        verifyStatic(once());
         RoutePlannerFactory.getRoutePlanner(RoutePlannerType.SHORTEST);
     }
 
     @Test
     public void shouldCallAirportsHoldersToGetAppropriateAirportFromInputString() throws RouteNotFoundException, AirportNotFoundException {
-        bookingController.getShortestRoute("bom", "del");
-        verifyStatic(times(1));
-        Airports.getAirport("bom");
-        verifyStatic(times(1));
-        Airports.getAirport("del");
+        bookingController.getShortestRoute(BOMBAY, DELHI);
+        verifyStatic(once());
+        Airports.getAirport(BOMBAY);
+        verifyStatic(once());
+        Airports.getAirport(DELHI);
     }
 
     @Test
     public void shouldMakeCallToRoutePlannerReturnedFromRoutePlannerFactory() throws RouteNotFoundException, AirportNotFoundException {
-        bookingController.getShortestRoute("bom", "del");
-        verify(routePlanner, times(1)).plan(bombayAirport, delhiAirport);
+        bookingController.getShortestRoute(BOMBAY, DELHI);
+        verify(routePlanner, once()).plan(bombayAirport, delhiAirport);
     }
 
     @Test
     public void shouldReturnFlightsGivenSourceAndDestination() throws RouteNotFoundException, AirportNotFoundException {
         Route expectedShortestRoute = new Route();
-        expectedShortestRoute.add(new Airport("bom"));
-        expectedShortestRoute.add(new Airport("del"));
+        expectedShortestRoute.add(new Airport(BOMBAY));
+        expectedShortestRoute.add(new Airport(DELHI));
         when(routePlanner.plan(bombayAirport, delhiAirport)).thenReturn(expectedShortestRoute);
-        Route actualShortestRoute = bookingController.getShortestRoute("bom", "del");
+        Route actualShortestRoute = bookingController.getShortestRoute(BOMBAY, DELHI);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
@@ -95,13 +98,16 @@ public class FlightBookingControllerTest {
         bombayOutgoingAirports.add(delhiAirport);
         delhiOutgoingAirports.remove(bombayAirport);
         when(routePlanner.plan(delhiAirport, bombayAirport)).thenThrow(new RouteNotFoundException(delhiAirport,bombayAirport));
-        bookingController.getShortestRoute("del", "bom");
+        bookingController.getShortestRoute(DELHI, BOMBAY);
     }
 
     @Test(expected = AirportNotFoundException.class)
     public void shouldThrowExceptionWhenAirportsHolderCantFindAirport() throws RouteNotFoundException, AirportNotFoundException {
         mockStatic(Airports.class);
         when(Airports.getAirport("hyd")).thenThrow(new AirportNotFoundException("hyd"));
-        bookingController.getShortestRoute("hyd", "bom");
+        bookingController.getShortestRoute("hyd", BOMBAY);
+    }
+    private VerificationMode once() {
+        return times(1);
     }
 }

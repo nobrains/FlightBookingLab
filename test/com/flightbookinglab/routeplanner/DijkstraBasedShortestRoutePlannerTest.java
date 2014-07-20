@@ -4,6 +4,7 @@ import com.flightbookinglab.cache.DJShortestRouteCache;
 import com.flightbookinglab.exception.RouteNotFoundException;
 import com.flightbookinglab.model.Airport;
 import com.flightbookinglab.model.Route;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,10 +35,14 @@ public class DijkstraBasedShortestRoutePlannerTest {
     private static List<Airport> delhiOutgoingAirports = new ArrayList<Airport>();
     private static List<Airport> goaOutgoingAirports = new ArrayList<Airport>();
     private static List<Airport> bangaloreOutgoingAirports = new ArrayList<Airport>();
-    private static Airport delhiAirport = new Airport("del");
-    private static Airport bombayAirport = new Airport("bom");
-    private static Airport goaAirport = new Airport("goi");
-    private static Airport bangaloreAirport = new Airport("blr");
+    private static final String DELHI = "del";
+    private static Airport delhiAirport = new Airport(DELHI);
+    private static final String BOMBAY = "bom";
+    private static Airport bombayAirport = new Airport(BOMBAY);
+    private static final String GOA = "goi";
+    private static Airport goaAirport = new Airport(GOA);
+    private static final String BANGALORE = "blr";
+    private static Airport bangaloreAirport = new Airport(BANGALORE);
 
     @BeforeClass
     public static void initialize() {
@@ -47,10 +52,14 @@ public class DijkstraBasedShortestRoutePlannerTest {
         goaAirport.setOutgoingAirports(goaOutgoingAirports);
     }
 
+    @Before
+    public void setUp(){
+        PowerMockito.mockStatic(DJShortestRouteCache.class);
+    }
+
     @Test
     public void shouldMakeCallToCacheToSeeIfAlreadyShortestPathExists() throws Exception {
         String cacheKey = DJShortestRouteCacheUtil.getCacheKey(goaAirport, delhiAirport);
-        PowerMockito.mockStatic(DJShortestRouteCache.class);
         try {
             dijkstraBasedShortestRoutePlanner.plan(goaAirport, delhiAirport);
         } catch (RouteNotFoundException e) {
@@ -65,12 +74,12 @@ public class DijkstraBasedShortestRoutePlannerTest {
         expectedRoute.add(bombayAirport);
         expectedRoute.add(delhiAirport);
         String cacheKey = DJShortestRouteCacheUtil.getCacheKey(bombayAirport, delhiAirport);
-        PowerMockito.mockStatic(DJShortestRouteCache.class);
         doNothing().when(DJShortestRouteCache.class,"put",cacheKey,expectedRoute);
         addRoutes(bombayOutgoingAirports, delhiAirport);
         Route actualRoute = dijkstraBasedShortestRoutePlanner.plan(bombayAirport, delhiAirport);
+
         verifyStatic(times(1));
-        DJShortestRouteCache.put(cacheKey,actualRoute);
+        DJShortestRouteCache.put(cacheKey, actualRoute);
     }
 
     @Test(expected = RouteNotFoundException.class)
@@ -82,8 +91,8 @@ public class DijkstraBasedShortestRoutePlannerTest {
     public void shouldReturnShortestRoute() throws Exception {
         addRoutes(bombayOutgoingAirports, delhiAirport);
         Route expectedShortestRoute = new Route();
-        expectedShortestRoute.add(new Airport("bom"));
-        expectedShortestRoute.add(new Airport("del"));
+        expectedShortestRoute.add(new Airport(BOMBAY));
+        expectedShortestRoute.add(new Airport(DELHI));
         Route actualShortestRoute = new DijkstraBasedShortestRoutePlanner().plan(bombayAirport, delhiAirport);
         assertTrue(expectedShortestRoute.equals(actualShortestRoute));
     }
@@ -93,9 +102,9 @@ public class DijkstraBasedShortestRoutePlannerTest {
         addRoutes(goaOutgoingAirports, bombayAirport);
         addRoutes(bombayOutgoingAirports, delhiAirport);
         Route expectedShortestRoute = new Route();
-        expectedShortestRoute.add(new Airport("goi"));
-        expectedShortestRoute.add(new Airport("bom"));
-        expectedShortestRoute.add(new Airport("del"));
+        expectedShortestRoute.add(new Airport(GOA));
+        expectedShortestRoute.add(new Airport(BOMBAY));
+        expectedShortestRoute.add(new Airport(DELHI));
         Route actualShortestRoute = dijkstraBasedShortestRoutePlanner.plan(goaAirport, delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
@@ -107,9 +116,9 @@ public class DijkstraBasedShortestRoutePlannerTest {
         addRoutes(bangaloreOutgoingAirports, bombayAirport);
 
         Route expectedShortestRoute = new Route();
-        expectedShortestRoute.add(new Airport("goi"));
-        expectedShortestRoute.add(new Airport("bom"));
-        expectedShortestRoute.add(new Airport("del"));
+        expectedShortestRoute.add(new Airport(GOA));
+        expectedShortestRoute.add(new Airport(BOMBAY));
+        expectedShortestRoute.add(new Airport(DELHI));
         Route actualShortestRoute = dijkstraBasedShortestRoutePlanner.plan(goaAirport, delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
