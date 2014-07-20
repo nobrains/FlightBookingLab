@@ -1,10 +1,8 @@
 package com.flightbookinglab.controller;
 
-import com.flightbookinglab.exception.RoutePlannerNotFoundException;
 import com.flightbookinglab.model.Route;
 import com.flightbookinglab.exception.AirportNotFoundException;
 import com.flightbookinglab.exception.RouteNotFoundException;
-import com.flightbookinglab.routeplanner.RoutePlanner;
 import com.flightbookinglab.model.Airports;
 import com.flightbookinglab.routeplanner.RoutePlannerFactory;
 import com.flightbookinglab.routeplanner.RoutePlannerType;

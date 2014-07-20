@@ -34,10 +34,10 @@ public class DijkstraBasedShortestRoutePlannerTest {
     private static List<Airport> delhiOutgoingAirports = new ArrayList<Airport>();
     private static List<Airport> goaOutgoingAirports = new ArrayList<Airport>();
     private static List<Airport> bangaloreOutgoingAirports = new ArrayList<Airport>();
-    private static Airport delhiAirport = new Airport("del");//, delhiOutgoingAirports);
-    private static Airport bombayAirport = new Airport("bom");//, bombayOutgoingAirports);
-    private static Airport goaAirport = new Airport("goi");//, goaOutgoingAirports);
-    private static Airport bangaloreAirport = new Airport("blr");//, bangaloreOutgoingAirports);
+    private static Airport delhiAirport = new Airport("del");
+    private static Airport bombayAirport = new Airport("bom");
+    private static Airport goaAirport = new Airport("goi");
+    private static Airport bangaloreAirport = new Airport("blr");
 
     @BeforeClass
     public static void initialize() {
@@ -88,10 +88,6 @@ public class DijkstraBasedShortestRoutePlannerTest {
         assertTrue(expectedShortestRoute.equals(actualShortestRoute));
     }
 
-    private void addRoutes(List<Airport> listToWhichAirportNeedsToBeAdded, Airport... airport) {
-        Collections.addAll(listToWhichAirportNeedsToBeAdded, airport);
-    }
-
     @Test
     public void shouldReturnShortestRouteWithMultiCitiesHoping() throws RouteNotFoundException {
         addRoutes(goaOutgoingAirports, bombayAirport);
@@ -118,5 +114,7 @@ public class DijkstraBasedShortestRoutePlannerTest {
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
-
+    private void addRoutes(List<Airport> listToWhichAirportNeedsToBeAdded, Airport... airport) {
+        Collections.addAll(listToWhichAirportNeedsToBeAdded, airport);
+    }
 }

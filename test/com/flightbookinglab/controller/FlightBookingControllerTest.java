@@ -1,12 +1,10 @@
 package com.flightbookinglab.controller;
 
-import com.flightbookinglab.cache.DJShortestRouteCache;
 import com.flightbookinglab.exception.AirportNotFoundException;
 import com.flightbookinglab.exception.RouteNotFoundException;
 import com.flightbookinglab.model.Airport;
 import com.flightbookinglab.model.Airports;
 import com.flightbookinglab.model.Route;
-import com.flightbookinglab.routeplanner.DijkstraBasedShortestRoutePlanner;
 import com.flightbookinglab.routeplanner.RoutePlanner;
 import com.flightbookinglab.routeplanner.RoutePlannerFactory;
 import com.flightbookinglab.routeplanner.RoutePlannerType;
@@ -14,9 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -24,13 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.powermock.api.mockito.PowerMockito.*;
 
 /**
  * Created by annarvekar on 7/8/14.
@@ -102,7 +94,7 @@ public class FlightBookingControllerTest {
     public void shouldThrowExceptionIfRoutePlannerFindsNoRoute() throws RouteNotFoundException, AirportNotFoundException {
         bombayOutgoingAirports.add(delhiAirport);
         delhiOutgoingAirports.remove(bombayAirport);
-        when(routePlanner.plan(delhiAirport, bombayAirport)).thenThrow(new RouteNotFoundException());
+        when(routePlanner.plan(delhiAirport, bombayAirport)).thenThrow(new RouteNotFoundException(delhiAirport,bombayAirport));
         bookingController.getShortestRoute("del", "bom");
     }
 

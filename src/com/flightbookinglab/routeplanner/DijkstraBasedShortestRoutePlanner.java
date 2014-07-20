@@ -45,7 +45,7 @@ public class DijkstraBasedShortestRoutePlanner implements RoutePlanner {
         }
         shortestRoute = getShortestPathTo(destinationNode);
         if (shortestRoute.size() == 1) {
-            throw new RouteNotFoundException();
+            throw new RouteNotFoundException(source,destination);
         }
         DJShortestRouteCache.put(cacheKey, shortestRoute);
         return shortestRoute;
