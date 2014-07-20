@@ -18,8 +18,8 @@ public class DJNode
     }
 
     public List<DJNode> getConnectedAirportNodes() {
-        List<DJNode> djNodes = new ArrayList<DJNode>(airport.outgoingAirports.size());
-        for (Airport outgoingAirport : airport.outgoingAirports) {
+        List<DJNode> djNodes = new ArrayList<DJNode>(airport.getOutgoingAirports().size());
+        for (Airport outgoingAirport : airport.getOutgoingAirports()) {
             djNodes.add(new DJNode(outgoingAirport));
         }
         return djNodes;

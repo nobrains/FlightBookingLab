@@ -12,22 +12,10 @@ import java.util.*;
  */
 public class DijkstraBasedShortestRoutePlanner implements RoutePlanner {
 
-    private DJShortestRouteCache shortestRouteCache;
-    private static DijkstraBasedShortestRoutePlanner shortestRoutePlanner;
-
-    private DijkstraBasedShortestRoutePlanner() {
-    }
-
-    public static DijkstraBasedShortestRoutePlanner getInstance() {
-        if (shortestRoutePlanner == null)
-            shortestRoutePlanner = new DijkstraBasedShortestRoutePlanner();
-        return shortestRoutePlanner;
-    }
-
     @Override
     public Route plan(Airport source, Airport destination) throws RouteNotFoundException {
         String cacheKey = DJShortestRouteCacheUtil.getCacheKey(source, destination);
-        Route shortestRoute = shortestRouteCache.get(cacheKey);
+        Route shortestRoute = DJShortestRouteCache.get(cacheKey);
         if (shortestRoute != null) {
             return shortestRoute;
         }
@@ -59,7 +47,7 @@ public class DijkstraBasedShortestRoutePlanner implements RoutePlanner {
         if (shortestRoute.size() == 1) {
             throw new RouteNotFoundException();
         }
-        shortestRouteCache.put(cacheKey, shortestRoute);
+        DJShortestRouteCache.put(cacheKey, shortestRoute);
         return shortestRoute;
     }
 

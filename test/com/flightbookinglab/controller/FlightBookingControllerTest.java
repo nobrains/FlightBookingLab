@@ -41,8 +41,10 @@ public class FlightBookingControllerTest {
 
     @BeforeClass
     public static void initialize() {
-        delhiAirport = new Airport("del", delhiOutgoingAirports);
-        bombayAirport = new Airport("bom", bombayOutgoingAirports);
+        delhiAirport = new Airport("del");
+        delhiAirport.setOutgoingAirports(delhiOutgoingAirports);
+        bombayAirport = new Airport("bom");
+        bombayAirport.setOutgoingAirports(bombayOutgoingAirports);
         bombayOutgoingAirports.add(delhiAirport);
         delhiOutgoingAirports.add(bombayAirport);
     }
@@ -54,8 +56,8 @@ public class FlightBookingControllerTest {
         stub(airports.getAirport("del")).toReturn(delhiAirport);
 
         Route expectedShortestRoute = new Route();
-        expectedShortestRoute.add(new Airport("bom", null));
-        expectedShortestRoute.add(new Airport("del", null));
+        expectedShortestRoute.add(new Airport("bom"));
+        expectedShortestRoute.add(new Airport("del"));
         stub(routePlanner.plan(bombayAirport, delhiAirport)).toReturn(expectedShortestRoute);
         Route actualShortestRoute = bookingController.getShortestRoute("bom", "del");
         verifyMethodsCalledOnStubs();

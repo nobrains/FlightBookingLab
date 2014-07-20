@@ -1,5 +1,6 @@
 package com.flightbookinglab.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,12 +8,10 @@ import java.util.List;
  */
 public class Airport {
     private final String airportName;
-    public List<Airport> outgoingAirports;
-    public List<Runway> runways;
+    private List<Airport> outgoingAirports = new ArrayList<Airport>();
 
-    public Airport(String airport, List<Airport> outgoingAirports) {
+    public Airport(String airport) {
         this.airportName = airport;
-        this.outgoingAirports = outgoingAirports;
     }
 
     public String getAirportName() {
@@ -22,5 +21,13 @@ public class Airport {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Airport && ((Airport) obj).airportName.equals(airportName);
+    }
+
+    public void setOutgoingAirports(List<Airport> outgoingAirports) {
+        this.outgoingAirports = outgoingAirports;
+    }
+
+    public List<Airport> getOutgoingAirports() {
+        return outgoingAirports;
     }
 }

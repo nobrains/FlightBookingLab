@@ -11,11 +11,11 @@ import java.util.Map;
 public class DJShortestRouteCache {
     private static Map<String, Route> map = new HashMap<String, Route>();
 
-    public Route get(String s) {
+    public static Route get(String s) {
         return map.get(s);
     }
 
-    public void put(String s, Route route) {
+    public static void put(String s, Route route) {
         map.put(s,route);
     }
 }

@@ -25,13 +25,13 @@ public class AirportsTest {
 
     @Test
     public void shouldReturnProperAirport() throws AirportNotFoundException {
-        airports.add(new Airport("bom",null));
+        airports.add(new Airport("bom"));
         assertEquals("bom", airports.getAirport("bom").getAirportName());
     }
 
     @Test(expected = AirportNotFoundException.class)
     public void airportNameShouldBeCaseSensitive() throws AirportNotFoundException {
-        airports.add(new Airport("BOM",null));
+        airports.add(new Airport("BOM"));
         airports.getAirport("bom");
     }
 }
