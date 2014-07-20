@@ -5,4 +5,5 @@ package com.flightbookinglab.routeplanner;
  */
 public enum RoutePlannerType {
     SHORTEST
+    //there could be others. for e.g. CHEAPEST
 }
