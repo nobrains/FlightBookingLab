@@ -1,11 +1,15 @@
 package com.flightbookinglab.controller;
 
+import com.flightbookinglab.cache.DJShortestRouteCache;
 import com.flightbookinglab.exception.AirportNotFoundException;
 import com.flightbookinglab.exception.RouteNotFoundException;
 import com.flightbookinglab.model.Airport;
 import com.flightbookinglab.model.Airports;
 import com.flightbookinglab.model.Route;
+import com.flightbookinglab.routeplanner.DijkstraBasedShortestRoutePlanner;
 import com.flightbookinglab.routeplanner.RoutePlanner;
+import com.flightbookinglab.routeplanner.RoutePlannerFactory;
+import com.flightbookinglab.routeplanner.RoutePlannerType;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,26 +17,30 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * Created by annarvekar on 7/8/14.
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({FlightBookingController.class, Airports.class, RoutePlannerFactory.class})
 public class FlightBookingControllerTest {
 
     @Mock
-    private Airports airports;
-    @Mock
     private RoutePlanner routePlanner;
-    @InjectMocks
     private FlightBookingController bookingController = new FlightBookingController();
     private static List<Airport> bombayOutgoingAirports = new ArrayList<Airport>();
     private static List<Airport> delhiOutgoingAirports = new ArrayList<Airport>();
@@ -49,43 +57,59 @@ public class FlightBookingControllerTest {
         delhiOutgoingAirports.add(bombayAirport);
     }
 
+    @Before
+    public void setUp() throws AirportNotFoundException {
+        mockStatic(Airports.class);
+        mockStatic(RoutePlannerFactory.class);
+        when(Airports.getAirport("bom")).thenReturn(bombayAirport);
+        when(Airports.getAirport("del")).thenReturn(delhiAirport);
+        when(RoutePlannerFactory.getRoutePlanner(RoutePlannerType.SHORTEST)).thenReturn(routePlanner);
+    }
+
+    @Test
+    public void shouldCallRoutePlannerFactoryForAppropriatePlannerImplementation() throws RouteNotFoundException, AirportNotFoundException {
+        bookingController.getShortestRoute("bom", "del");
+        verifyStatic(times(1));
+        RoutePlannerFactory.getRoutePlanner(RoutePlannerType.SHORTEST);
+    }
+
+    @Test
+    public void shouldCallAirportsHoldersToGetAppropriateAirportFromInputString() throws RouteNotFoundException, AirportNotFoundException {
+        bookingController.getShortestRoute("bom", "del");
+        verifyStatic(times(1));
+        Airports.getAirport("bom");
+        verifyStatic(times(1));
+        Airports.getAirport("del");
+    }
+
+    @Test
+    public void shouldMakeCallToRoutePlannerReturnedFromRoutePlannerFactory() throws RouteNotFoundException, AirportNotFoundException {
+        bookingController.getShortestRoute("bom", "del");
+        verify(routePlanner, times(1)).plan(bombayAirport, delhiAirport);
+    }
+
     @Test
     public void shouldReturnFlightsGivenSourceAndDestination() throws RouteNotFoundException, AirportNotFoundException {
-
-        stub(airports.getAirport("bom")).toReturn(bombayAirport);
-        stub(airports.getAirport("del")).toReturn(delhiAirport);
-
         Route expectedShortestRoute = new Route();
         expectedShortestRoute.add(new Airport("bom"));
         expectedShortestRoute.add(new Airport("del"));
-        stub(routePlanner.plan(bombayAirport, delhiAirport)).toReturn(expectedShortestRoute);
+        when(routePlanner.plan(bombayAirport, delhiAirport)).thenReturn(expectedShortestRoute);
         Route actualShortestRoute = bookingController.getShortestRoute("bom", "del");
-        verifyMethodsCalledOnStubs();
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
     @Test(expected = RouteNotFoundException.class)
-    public void shouldThrowExceptionIfNoPossibleRouteIsFound() throws RouteNotFoundException, AirportNotFoundException {
+    public void shouldThrowExceptionIfRoutePlannerFindsNoRoute() throws RouteNotFoundException, AirportNotFoundException {
         bombayOutgoingAirports.add(delhiAirport);
         delhiOutgoingAirports.remove(bombayAirport);
-        stub(airports.getAirport("bom")).toReturn(bombayAirport);
-        stub(airports.getAirport("del")).toReturn(delhiAirport);
-        stub(routePlanner.plan(delhiAirport, bombayAirport)).toThrow(new RouteNotFoundException());
-
+        when(routePlanner.plan(delhiAirport, bombayAirport)).thenThrow(new RouteNotFoundException());
         bookingController.getShortestRoute("del", "bom");
-        verifyMethodsCalledOnStubs();
     }
 
     @Test(expected = AirportNotFoundException.class)
-    public void shouldThrowAirportNotFoundExceptionWhenInvalidAirportIsPassed() throws RouteNotFoundException, AirportNotFoundException {
-        stub(airports.getAirport("hyd")).toThrow(new AirportNotFoundException("hyd"));
+    public void shouldThrowExceptionWhenAirportsHolderCantFindAirport() throws RouteNotFoundException, AirportNotFoundException {
+        mockStatic(Airports.class);
+        when(Airports.getAirport("hyd")).thenThrow(new AirportNotFoundException("hyd"));
         bookingController.getShortestRoute("hyd", "bom");
-        verify(airports, times(1)).getAirport("hyd");
-    }
-
-    private void verifyMethodsCalledOnStubs() throws RouteNotFoundException, AirportNotFoundException {
-        verify(routePlanner, times(1)).plan(bombayAirport, delhiAirport);
-        verify(airports, times(1)).getAirport("bom");
-        verify(airports, times(1)).getAirport("del");
     }
 }

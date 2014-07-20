@@ -1,8 +1,12 @@
 package com.flightbookinglab.model;
 
 import com.flightbookinglab.exception.AirportNotFoundException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -11,27 +15,27 @@ import static junit.framework.Assert.assertEquals;
  */
 public class AirportsTest {
 
-    private Airports airports;
-
-    @Before
-    public void setUp(){
-        airports=new Airports();
-    }
-
     @Test(expected = AirportNotFoundException.class)
     public void shouldThrowAirportNotFoundExceptionWhenInvalidAirportIsPassed() throws AirportNotFoundException {
-        airports.getAirport("bom");
+        Airports.getAirport("bom");
     }
 
     @Test
     public void shouldReturnProperAirport() throws AirportNotFoundException {
-        airports.add(new Airport("bom"));
-        assertEquals("bom", airports.getAirport("bom").getAirportName());
+        Airports.add(new Airport("bom"));
+        assertEquals("bom", Airports.getAirport("bom").getAirportName());
     }
 
     @Test(expected = AirportNotFoundException.class)
     public void airportNameShouldBeCaseSensitive() throws AirportNotFoundException {
-        airports.add(new Airport("BOM"));
-        airports.getAirport("bom");
+        Airports.add(new Airport("BOM"));
+        Airports.getAirport("bom");
+    }
+
+    @After
+    public void cleanUp() throws NoSuchFieldException, IllegalAccessException {
+        Field field = Airports.class.getDeclaredField("locallyCachedAirports");
+        field.setAccessible(true);
+        field.set(null,new ArrayList<Airport>());
     }
 }
