@@ -11,7 +11,7 @@ import java.util.List;
 public class Airports{
     private static List<Airport> locallyCachedAirports = new ArrayList<Airport>();
     {
-        //locallyCachedAirports would be statically loaded when the application bootstraps
+        //locallyCachedAirports. would be statically loaded during application bootstrap
     }
 
     public static Airport getAirport(String airportName) throws AirportNotFoundException {
