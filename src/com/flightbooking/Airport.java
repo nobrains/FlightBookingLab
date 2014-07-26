@@ -2,6 +2,8 @@ package com.flightbooking;
 
 import com.flightbooking.planner.RoutePlanner;
 import com.flightbooking.planner.RoutePlanningStrategyProvider;
+import com.flightbooking.planner.ShortestRouteCache;
+import com.flightbooking.planner.ShortestRouteCacheKeyUtil;
 
 import java.util.*;
 
@@ -17,8 +19,14 @@ public class Airport {
     }
 
     public List<Airport> getShortestRouteTo(Airport destinationAirport) {
+
+        String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(this, destinationAirport);
+        List<Airport> cachedRoute = ShortestRouteCache.get(cacheKey);
+        if (cachedRoute != null)
+            return cachedRoute;
         RoutePlanner shortestRouteStrategy = RoutePlanningStrategyProvider.getShortestRouteStrategy();
         List<Airport> shortestRoute = shortestRouteStrategy.plan(this, destinationAirport);
+        ShortestRouteCache.put(cacheKey,shortestRoute);
         return shortestRoute;
     }
 

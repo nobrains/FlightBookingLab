@@ -71,21 +71,6 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/test/com/flightbooking/planner/ShortestRoutePlannerTest.java" line="76" class="com.flightbooking.planner.ShortestRoutePlannerTest" package="com.flightbooking.planner">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
     </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
@@ -96,37 +81,66 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Place.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/delete/Place.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="23" selection-start="483" selection-end="483" vertical-scroll-proportion="0.0" vertical-offset="299" max-vertical-offset="901">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#236#243#0" expanded="true" />
-                <element signature="e#635#642#0" expanded="true" />
-                <element signature="e#797#804#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AirportTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/com/flightbooking/AirportTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="9" selection-start="1848" selection-end="1848" vertical-scroll-proportion="-0.10947368" vertical-offset="953" max-vertical-offset="1428">
+            <state line="39" column="41" selection-start="1333" selection-end="1333" vertical-scroll-proportion="-3.3245492" vertical-offset="3060" max-vertical-offset="3995">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3151#3160#0" expanded="true" />
+                <element signature="e#3776#3785#0" expanded="true" />
+                <element signature="e#5050#5059#0" expanded="true" />
+                <element signature="e#5525#5534#0" expanded="true" />
+                <element signature="e#6020#6029#0" expanded="true" />
+                <element signature="e#6614#6623#0" expanded="true" />
+                <element signature="e#7260#7269#0" expanded="true" />
+                <element signature="e#7681#7690#0" expanded="true" />
+                <element signature="e#8185#8194#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlaceTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/delete/PlaceTest.java">
+      <file leaf-file-name="Airport.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/flightbooking/Airport.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="0" selection-start="3114" selection-end="3114" vertical-scroll-proportion="0.0" vertical-offset="1412" max-vertical-offset="1887">
+            <state line="30" column="5" selection-start="1127" selection-end="1127" vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="833">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#438#447#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShortestRoutePlanner.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/flightbooking/planner/ShortestRoutePlanner.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="0" selection-start="342" selection-end="569" vertical-scroll-proportion="0.0" vertical-offset="52" max-vertical-offset="833">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#926#935#0" expanded="true" />
+                <element signature="e#1112#1121#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShortestRoutePlannerTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/com/flightbooking/planner/ShortestRoutePlannerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="154" column="52" selection-start="6527" selection-end="6527" vertical-scroll-proportion="0.0" vertical-offset="2279" max-vertical-offset="3009">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2142#2151#0" expanded="true" />
+                <element signature="e#2765#2774#0" expanded="true" />
+                <element signature="e#3257#3266#0" expanded="true" />
+                <element signature="e#3729#3738#0" expanded="true" />
+                <element signature="e#4220#4229#0" expanded="true" />
+                <element signature="e#4809#4818#0" expanded="true" />
+                <element signature="e#5449#5458#0" expanded="true" />
+                <element signature="e#5865#5874#0" expanded="true" />
+                <element signature="e#6363#6372#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -151,12 +165,12 @@
         <option value="$PROJECT_DIR$/src/com/flightbooking/planner/ShortestRouteCacheKeyUtil.java" />
         <option value="$PROJECT_DIR$/src/com/flightbooking/planner/ShortestRouteMappingCache.java" />
         <option value="$PROJECT_DIR$/src/com/flightbooking/planner/ShortestRouteCache.java" />
-        <option value="$PROJECT_DIR$/src/com/flightbooking/Airport.java" />
-        <option value="$PROJECT_DIR$/test/com/flightbooking/AirportTest.java" />
-        <option value="$PROJECT_DIR$/test/com/flightbooking/planner/ShortestRoutePlannerTest.java" />
-        <option value="$PROJECT_DIR$/src/com/flightbooking/planner/ShortestRoutePlanner.java" />
         <option value="$PROJECT_DIR$/test/delete/PlaceTest.java" />
         <option value="$PROJECT_DIR$/src/delete/Place.java" />
+        <option value="$PROJECT_DIR$/src/com/flightbooking/planner/ShortestRoutePlanner.java" />
+        <option value="$PROJECT_DIR$/src/com/flightbooking/Airport.java" />
+        <option value="$PROJECT_DIR$/test/com/flightbooking/planner/ShortestRoutePlannerTest.java" />
+        <option value="$PROJECT_DIR$/test/com/flightbooking/AirportTest.java" />
       </list>
     </option>
   </component>
@@ -317,101 +331,13 @@
       <recent name="com.flightbooking" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PlaceTest">
-    <configuration default="false" name="PlaceTest.test3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.AirportTest">
+    <configuration default="false" name="AirportTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FlightBooking" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="delete" />
-      <option name="MAIN_CLASS_NAME" value="delete.PlaceTest" />
-      <option name="METHOD_NAME" value="test3" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="PlaceTest.test4" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FlightBooking" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="delete" />
-      <option name="MAIN_CLASS_NAME" value="delete.PlaceTest" />
-      <option name="METHOD_NAME" value="test4" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="PlaceTest.test5" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FlightBooking" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="delete" />
-      <option name="MAIN_CLASS_NAME" value="delete.PlaceTest" />
-      <option name="METHOD_NAME" value="test5" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="PlaceTest.test6" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FlightBooking" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="delete" />
-      <option name="MAIN_CLASS_NAME" value="delete.PlaceTest" />
-      <option name="METHOD_NAME" value="test6" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="PlaceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FlightBooking" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="delete" />
-      <option name="MAIN_CLASS_NAME" value="delete.PlaceTest" />
+      <option name="PACKAGE_NAME" value="com.flightbooking" />
+      <option name="MAIN_CLASS_NAME" value="com.flightbooking.AirportTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -424,13 +350,95 @@
       </option>
       <envs />
       <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="AirportTest.testShortestRoute" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FlightBooking" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.flightbooking" />
+      <option name="MAIN_CLASS_NAME" value="com.flightbooking.AirportTest" />
+      <option name="METHOD_NAME" value="testShortestRoute" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="AirportTest.shouldReturnShortestRouteWhenDestinationAirportIsDirectlyConnected" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FlightBooking" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.flightbooking" />
+      <option name="MAIN_CLASS_NAME" value="com.flightbooking.AirportTest" />
+      <option name="METHOD_NAME" value="shouldReturnShortestRouteWhenDestinationAirportIsDirectlyConnected" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="AirportTest.shouldReturnShortestRouteWhenSourceHasMultipleOutgoingAirportsOneOfThemBeingTheDestinationAirport" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FlightBooking" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.flightbooking" />
+      <option name="MAIN_CLASS_NAME" value="com.flightbooking.AirportTest" />
+      <option name="METHOD_NAME" value="shouldReturnShortestRouteWhenSourceHasMultipleOutgoingAirportsOneOfThemBeingTheDestinationAirport" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="AirportTest.shouldReturnShortestRouteWhenThereIsOneIntermediateHopsBetweenSourceAndDestination" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FlightBooking" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.flightbooking" />
+      <option name="MAIN_CLASS_NAME" value="com.flightbooking.AirportTest" />
+      <option name="METHOD_NAME" value="shouldReturnShortestRouteWhenThereIsOneIntermediateHopsBetweenSourceAndDestination" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -562,19 +570,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.PlaceTest.test3" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.PlaceTest.test4" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.PlaceTest.test5" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.PlaceTest.test6" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.PlaceTest" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.AirportTest" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.AirportTest.testShortestRoute" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.AirportTest.shouldReturnShortestRouteWhenDestinationAirportIsDirectlyConnected" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.AirportTest.shouldReturnShortestRouteWhenSourceHasMultipleOutgoingAirportsOneOfThemBeingTheDestinationAirport" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.AirportTest.shouldReturnShortestRouteWhenThereIsOneIntermediateHopsBetweenSourceAndDestination" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.PlaceTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.PlaceTest.test6" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.PlaceTest.test5" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.PlaceTest.test4" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.PlaceTest.test3" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.AirportTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.AirportTest.shouldReturnShortestRouteWhenThereIsOneIntermediateHopsBetweenSourceAndDestination" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.AirportTest.shouldReturnShortestRouteWhenSourceHasMultipleOutgoingAirportsOneOfThemBeingTheDestinationAirport" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.AirportTest.shouldReturnShortestRouteWhenDestinationAirportIsDirectlyConnected" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.AirportTest.testShortestRoute" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -613,7 +621,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24903722" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32931727" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931727" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
@@ -699,16 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/flightbooking/Airport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="63" selection-start="667" selection-end="667" vertical-scroll-proportion="0.47156727" vertical-offset="0" max-vertical-offset="721">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#325#334#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/flightbooking/planner/RoutePlanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="25" selection-start="197" selection-end="197" vertical-scroll-proportion="0.23578364" vertical-offset="0" max-vertical-offset="721">
@@ -718,32 +716,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/flightbooking/planner/ShortestRoutePlannerTest.java">
+    <entry file="file://$PROJECT_DIR$/src/delete/Place.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="34" selection-start="813" selection-end="813" vertical-scroll-proportion="-2.5603328" vertical-offset="2288" max-vertical-offset="3009">
+        <state line="22" column="19" selection-start="403" selection-end="513" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="901">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2080#2089#0" expanded="true" />
-            <element signature="e#2701#2710#0" expanded="true" />
-            <element signature="e#3193#3202#0" expanded="true" />
-            <element signature="e#3665#3674#0" expanded="true" />
-            <element signature="e#4156#4165#0" expanded="true" />
-            <element signature="e#4745#4754#0" expanded="true" />
-            <element signature="e#5385#5394#0" expanded="true" />
-            <element signature="e#5801#5810#0" expanded="true" />
-            <element signature="e#6299#6308#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/flightbooking/planner/ShortestRoutePlanner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="328" selection-end="328" vertical-scroll-proportion="0.1886269" vertical-offset="102" max-vertical-offset="1581">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#718#733#0" expanded="true" />
-            <element signature="e#813#822#0" expanded="true" />
-            <element signature="e#2220#2229#0" expanded="true" />
+            <element signature="e#236#243#0" expanded="true" />
+            <element signature="e#635#642#0" expanded="true" />
+            <element signature="e#797#804#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -757,23 +737,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/delete/Place.java">
+    <entry file="file://$PROJECT_DIR$/src/com/flightbooking/Airport.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="23" selection-start="483" selection-end="483" vertical-scroll-proportion="0.0" vertical-offset="299" max-vertical-offset="901">
+        <state line="30" column="5" selection-start="1127" selection-end="1127" vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="833">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#236#243#0" expanded="true" />
-            <element signature="e#635#642#0" expanded="true" />
-            <element signature="e#797#804#0" expanded="true" />
+            <element signature="e#438#447#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/flightbooking/planner/ShortestRoutePlanner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="342" selection-end="569" vertical-scroll-proportion="0.0" vertical-offset="52" max-vertical-offset="833">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#926#935#0" expanded="true" />
+            <element signature="e#1112#1121#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/com/flightbooking/planner/ShortestRoutePlannerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="154" column="52" selection-start="6527" selection-end="6527" vertical-scroll-proportion="0.0" vertical-offset="2279" max-vertical-offset="3009">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2142#2151#0" expanded="true" />
+            <element signature="e#2765#2774#0" expanded="true" />
+            <element signature="e#3257#3266#0" expanded="true" />
+            <element signature="e#3729#3738#0" expanded="true" />
+            <element signature="e#4220#4229#0" expanded="true" />
+            <element signature="e#4809#4818#0" expanded="true" />
+            <element signature="e#5449#5458#0" expanded="true" />
+            <element signature="e#5865#5874#0" expanded="true" />
+            <element signature="e#6363#6372#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/com/flightbooking/AirportTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="9" selection-start="1848" selection-end="1848" vertical-scroll-proportion="-0.10947368" vertical-offset="953" max-vertical-offset="1428">
+        <state line="39" column="41" selection-start="1333" selection-end="1333" vertical-scroll-proportion="-3.3245492" vertical-offset="3060" max-vertical-offset="3995">
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3151#3160#0" expanded="true" />
+            <element signature="e#3776#3785#0" expanded="true" />
+            <element signature="e#5050#5059#0" expanded="true" />
+            <element signature="e#5525#5534#0" expanded="true" />
+            <element signature="e#6020#6029#0" expanded="true" />
+            <element signature="e#6614#6623#0" expanded="true" />
+            <element signature="e#7260#7269#0" expanded="true" />
+            <element signature="e#7681#7690#0" expanded="true" />
+            <element signature="e#8185#8194#0" expanded="true" />
           </folding>
         </state>
       </provider>

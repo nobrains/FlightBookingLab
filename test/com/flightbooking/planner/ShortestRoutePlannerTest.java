@@ -41,12 +41,12 @@ public class ShortestRoutePlannerTest{
         mysoreAirport = new Airport("mah");
         goaAirport = new Airport("goi");
         routePlanner = new ShortestRoutePlanner();
-
+        PowerMockito.mockStatic(ShortestRouteCache.class);
     }
 
     @Test
     public void shouldCheckIfRouteExistsInCache(){
-        PowerMockito.mockStatic(ShortestRouteCache.class);
+//        PowerMockito.mockStatic(ShortestRouteCache.class);
         String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(bombayAirport, delhiAirport);
         when(ShortestRouteCache.get(cacheKey)).thenReturn(null);
 
@@ -58,7 +58,7 @@ public class ShortestRoutePlannerTest{
 
     @Test
     public void shouldReturnValueInCacheIfExists() {
-        PowerMockito.mockStatic(ShortestRouteCache.class);
+//        PowerMockito.mockStatic(ShortestRouteCache.class);
         String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(bombayAirport, delhiAirport);
         List<Airport> expectedRoute = Collections.<Airport>emptyList();
         when(ShortestRouteCache.get(cacheKey)).thenReturn(expectedRoute);
@@ -70,7 +70,7 @@ public class ShortestRoutePlannerTest{
 
     @Test
     public void shouldInsertIntoCacheIfNotPresentAlready() throws Exception {
-        PowerMockito.mockStatic(ShortestRouteCache.class);
+//        PowerMockito.mockStatic(ShortestRouteCache.class);
         String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(bombayAirport, delhiAirport);
         when(ShortestRouteCache.get(cacheKey)).thenReturn(null);
         doNothing().when(ShortestRouteCache.class,"put",cacheKey,Collections.<Airport>emptyList());
