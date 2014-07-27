@@ -15,9 +15,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class AirportTest {
+    public static final String BOM = "bom";
+    public static final String DEL = "del";
     private RouteCache routeCache = mock(InMemoryRouteCache.class);
-    private Airport bombayAirport= new Airport("bom");
-    private Airport delhiAirport= new Airport("del");
+    private Airport bombayAirport= new Airport(BOM);
+    private Airport delhiAirport= new Airport(DEL);
     private Airport cochinAirport= new Airport("cok");
     private Airport bangaloreAirport= new Airport("blr");
     private Airport mysoreAirport= new Airport("mah");
@@ -25,8 +27,8 @@ public class AirportTest {
 
     @Test
     public void returnsCachedValueIfExists() {
-        bombayAirport= new Airport("bom", routeCache);
-        String cacheKey = routeCache.createCacheKey(bombayAirport, delhiAirport);
+        bombayAirport= new Airport(BOM, routeCache);
+        String cacheKey = routeCache.createCacheKey(BOM, DEL);
         List<Airport> expectedRoute = Collections.emptyList();
         when(routeCache.get(cacheKey)).thenReturn(expectedRoute);
 
@@ -37,8 +39,8 @@ public class AirportTest {
 
     @Test
     public void cacheValuesForFuture() throws Exception {
-        bombayAirport= new Airport("bom", routeCache);
-        String cacheKey = routeCache.createCacheKey(bombayAirport, delhiAirport);
+        bombayAirport= new Airport(BOM, routeCache);
+        String cacheKey = routeCache.createCacheKey(BOM, DEL);
         when(routeCache.get(cacheKey)).thenReturn(null);
         List<Airport> actualRoute = bombayAirport.getShortestRouteTo(delhiAirport);
         verify(routeCache).put(cacheKey, actualRoute);
@@ -110,9 +112,9 @@ public class AirportTest {
 
     @Test
     public void weCheckAirportCodeToVerifyIfItsTheSameAirport() {
-        Airport del = new Airport("del");
-        assertEquals(del, new Airport("del"));
-        assertFalse(new Airport("bom").equals(del));
+        Airport del = new Airport(DEL);
+        assertEquals(del, new Airport(DEL));
+        assertFalse(new Airport(BOM).equals(del));
     }
 
     @After

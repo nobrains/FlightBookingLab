@@ -6,20 +6,17 @@ import com.flightbooking.planner.ShortestRoutePlanner;
 
 import java.util.*;
 
-/**
- * Created by annarvekar on 7/25/14.
- */
 public class Airport {
-    private final String airportName;
+    private final String airportCode;
     private final RouteCache routeCache;
     private final List<Airport> outgoingAirports = new ArrayList<Airport>();
 
-    public Airport(String airportName) {
-        this(airportName, InMemoryRouteCache.getInstance());
+    public Airport(String airportCode) {
+        this(airportCode, InMemoryRouteCache.getInstance());
     }
 
-    public Airport(String airportName, RouteCache routeCache) {
-        this.airportName = airportName;
+    public Airport(String airportCode, RouteCache routeCache) {
+        this.airportCode = airportCode;
         this.routeCache = routeCache;
     }
 
@@ -29,7 +26,7 @@ public class Airport {
 
     public List<Airport> getShortestRouteTo(Airport destinationAirport) {
 
-        String cacheKey = routeCache.createCacheKey(this, destinationAirport);
+        String cacheKey = routeCache.createCacheKey(this.airportCode, destinationAirport.airportCode);
         List<Airport> cachedRoute = routeCache.get(cacheKey);
         if (cachedRoute != null)
             return cachedRoute;
@@ -40,19 +37,15 @@ public class Airport {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Airport && ((Airport) obj).airportName.equals(this.airportName);
+        return obj instanceof Airport && ((Airport) obj).airportCode.equals(this.airportCode);
     }
 
     public List<Airport> getOutgoingAirports() {
         return outgoingAirports;
     }
 
-    public String getAirportName() {
-        return airportName;
-    }
-
     @Override
     public String toString() {
-        return airportName;
+        return airportCode;
     }
 }

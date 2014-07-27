@@ -24,8 +24,8 @@ public class InMemoryRouteCache implements RouteCache {
     }
 
     @Override
-    public String createCacheKey(Airport source, Airport destination) {
-        return source.getAirportName() + "-" + destination.getAirportName();
+    public String createCacheKey(String source, String destination) {
+        return source + "-" + destination;
     }
 
     @Override
