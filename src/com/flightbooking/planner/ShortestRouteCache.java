@@ -18,4 +18,8 @@ public class ShortestRouteCache {
     public static void put(String cacheKey, List<Airport> shortestRoute) {
         cache.put(cacheKey,shortestRoute);
     }
+
+    public static String createCacheKey(Airport source, Airport destination) {
+        return source.getAirportName()+"-"+destination.getAirportName();
+    }
 }

@@ -26,18 +26,16 @@ import static org.powermock.api.mockito.PowerMockito.when;
  * Created by annarvekar on 7/24/14.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Airport.class, RoutePlanningStrategyProvider.class, ShortestRouteCache.class})
+@PrepareForTest({Airport.class, ShortestRouteCache.class})
 public class AirportTest {
 
-    @Mock
-    private RoutePlanner mockedStrategy;
+//    @Mock
     private Airport bombayAirport;
     private Airport delhiAirport;
     private Airport cochinAirport;
     private Airport bangaloreAirport;
     private Airport mysoreAirport;
     private Airport goaAirport;
-    private ShortestRoutePlanner routePlanner;
 
     @Before
     public void setUp() {
@@ -47,26 +45,12 @@ public class AirportTest {
         bangaloreAirport = new Airport("blr");
         mysoreAirport = new Airport("mah");
         goaAirport = new Airport("goi");
-        routePlanner = new ShortestRoutePlanner();
-        PowerMockito.mockStatic(RoutePlanningStrategyProvider.class);
-        when(RoutePlanningStrategyProvider.getShortestRouteStrategy()).thenReturn(new ShortestRoutePlanner());
-    }
-
-    @Test
-    public void testShortestRouteWithMockedStrategy() {
-        List<Airport> expectedRoute = Collections.emptyList();
-        when(mockedStrategy.plan(bombayAirport, delhiAirport)).thenReturn(expectedRoute);
-        when(RoutePlanningStrategyProvider.getShortestRouteStrategy()).thenReturn(mockedStrategy);
-        List<Airport> actualRoute = bombayAirport.getShortestRouteTo(delhiAirport);
-
-        planningStrategyProviderShouldBeCalledToGetAStrategy();
-        shouldReturnListOfAirportIndicatingTheShortestRouteAsReturnedByTheStrategy(expectedRoute, actualRoute);
     }
 
     @Test
     public void shouldCheckIfRouteExistsInCache() {
         PowerMockito.mockStatic(ShortestRouteCache.class);
-        String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(bombayAirport, delhiAirport);
+        String cacheKey = ShortestRouteCache.createCacheKey(bombayAirport, delhiAirport);
         when(ShortestRouteCache.get(cacheKey)).thenReturn(null);
 
         bombayAirport.getShortestRouteTo(delhiAirport);
@@ -78,7 +62,7 @@ public class AirportTest {
     @Test
     public void shouldReturnValueInCacheIfExists() {
         PowerMockito.mockStatic(ShortestRouteCache.class);
-        String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(bombayAirport, delhiAirport);
+        String cacheKey = ShortestRouteCache.createCacheKey(bombayAirport, delhiAirport);
         List<Airport> expectedRoute = Collections.emptyList();
         when(ShortestRouteCache.get(cacheKey)).thenReturn(expectedRoute);
 
@@ -90,7 +74,7 @@ public class AirportTest {
     @Test
     public void shouldInsertIntoCacheIfNotPresentAlready() throws Exception {
         PowerMockito.mockStatic(ShortestRouteCache.class);
-        String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(bombayAirport, delhiAirport);
+        String cacheKey = ShortestRouteCache.createCacheKey(bombayAirport, delhiAirport);
         when(ShortestRouteCache.get(cacheKey)).thenReturn(null);
         doNothing().when(ShortestRouteCache.class, "put", cacheKey, Collections.<Airport>emptyList());
         List<Airport> actualRoute = bombayAirport.getShortestRouteTo(delhiAirport);
@@ -179,15 +163,6 @@ public class AirportTest {
 
     private void shouldBeEqualWhenAirportNamesAreSame() {
         assertTrue(new Airport("del").equals(new Airport("del")));
-    }
-
-    private void planningStrategyProviderShouldBeCalledToGetAStrategy() {
-        verifyStatic(times(1));
-        RoutePlanningStrategyProvider.getShortestRouteStrategy();
-    }
-
-    private void shouldReturnListOfAirportIndicatingTheShortestRouteAsReturnedByTheStrategy(List<Airport> expectedRoute, List<Airport> actualRoute) {
-        assertEquals(expectedRoute, actualRoute);
     }
 
     private List<Airport> createListWith(Airport... airport) {

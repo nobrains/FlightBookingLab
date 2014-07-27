@@ -9,9 +9,8 @@ import java.util.List;
 /**
  * Created by annarvekar on 7/26/14.
  */
-public class ShortestRoutePlanner implements RoutePlanner {
+public class ShortestRoutePlanner {
 
-    @Override
     public List<Airport> plan(Airport source, Airport destination) {
         List<Airport> shortestRoute = computeShortestRoute(source, destination);
         return reverse(shortestRoute);
