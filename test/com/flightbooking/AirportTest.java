@@ -79,7 +79,7 @@ public class AirportTest {
     public void shouldReturnValueInCacheIfExists() {
         PowerMockito.mockStatic(ShortestRouteCache.class);
         String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(bombayAirport, delhiAirport);
-        List<Airport> expectedRoute = Collections.<Airport>emptyList();
+        List<Airport> expectedRoute = Collections.emptyList();
         when(ShortestRouteCache.get(cacheKey)).thenReturn(expectedRoute);
 
         List<Airport> actualRoute = bombayAirport.getShortestRouteTo(delhiAirport);
@@ -99,97 +99,71 @@ public class AirportTest {
         ShortestRouteCache.put(cacheKey, actualRoute);
     }
 
-//    @Test
-    public void testShortestRoute() {
-        PowerMockito.mockStatic(RoutePlanningStrategyProvider.class);
-        when(RoutePlanningStrategyProvider.getShortestRouteStrategy()).thenReturn(new ShortestRoutePlanner());
-
-        shouldReturnShortestRouteWhenDestinationAirportIsDirectlyConnected();
-        shouldReturnShortestRouteWhenSourceHasMultipleOutgoingAirportsOneOfThemBeingTheDestinationAirport();
-        shouldReturnShortestRouteWhenThereIsOneIntermediateHopsBetweenSourceAndDestination();
-        shouldReturnShortestRouteWhenThereAreMultipleIntermediateHopsBetweenSourceAndDestination();
-        shouldReturnEmptyListIfThereIsNoRouteAvailable();
-        shouldReturnShortestRouteWhenThereAreMultipleRoutesToDestinationAvailable();
-        foo();
-    }
-
-        @Test
+    @Test
     public void shouldReturnShortestRouteWhenDestinationAirportIsDirectlyConnected() {
-        foo(bombayAirport, delhiAirport);
+        setOutgoingAirport(bombayAirport, delhiAirport);
         List<Airport> actualShortestRoute = bombayAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = new ArrayList<Airport>();
-        expectedShortestRoute.add(delhiAirport);
+        List<Airport> expectedShortestRoute = createListWith(delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
-        @Test
+    @Test
     public void shouldReturnShortestRouteWhenSourceHasMultipleOutgoingAirportsOneOfThemBeingTheDestinationAirport() {
-        foo(bombayAirport, cochinAirport, delhiAirport);
+        setOutgoingAirport(bombayAirport, cochinAirport, delhiAirport);
         List<Airport> actualShortestRoute = bombayAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = new ArrayList<Airport>();
-        expectedShortestRoute.add(delhiAirport);
+        List<Airport> expectedShortestRoute = createListWith(delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
-        @Test
+    @Test
     public void shouldReturnShortestRouteWhenThereIsOneIntermediateHopsBetweenSourceAndDestination() {
-        foo(bombayAirport, delhiAirport);
-        foo(bangaloreAirport, bombayAirport);
+        setOutgoingAirport(bombayAirport, delhiAirport);
+        setOutgoingAirport(bangaloreAirport, bombayAirport);
         List<Airport> actualShortestRoute = bangaloreAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = new LinkedList<Airport>();
-        expectedShortestRoute.add(bombayAirport);
-        expectedShortestRoute.add(delhiAirport);
+        List<Airport> expectedShortestRoute = createListWith(bombayAirport, delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
-        @Test
+    @Test
     public void shouldReturnShortestRouteWhenThereAreMultipleIntermediateHopsBetweenSourceAndDestination() {
-        foo(bombayAirport, delhiAirport);
-        foo(bangaloreAirport, bombayAirport);
-        foo(cochinAirport, bangaloreAirport);
+        setOutgoingAirport(bombayAirport, delhiAirport);
+        setOutgoingAirport(bangaloreAirport, bombayAirport);
+        setOutgoingAirport(cochinAirport, bangaloreAirport);
         List<Airport> actualShortestRoute = cochinAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = new LinkedList<Airport>();
-        expectedShortestRoute.add(bangaloreAirport);
-        expectedShortestRoute.add(bombayAirport);
-        expectedShortestRoute.add(delhiAirport);
+        List<Airport> expectedShortestRoute = createListWith(bangaloreAirport, bombayAirport, delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
-        @Test
+    @Test
     public void shouldReturnShortestRouteWhenThereAreMultipleRoutesToDestinationAvailable() {
-        foo(bombayAirport, delhiAirport);
-        foo(bangaloreAirport, delhiAirport, bombayAirport);
-        foo(cochinAirport, bangaloreAirport);
+        setOutgoingAirport(bombayAirport, delhiAirport);
+        setOutgoingAirport(bangaloreAirport, delhiAirport, bombayAirport);
+        setOutgoingAirport(cochinAirport, bangaloreAirport);
         List<Airport> actualShortestRoute = cochinAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = new LinkedList<Airport>();
-        expectedShortestRoute.add(bangaloreAirport);
-        expectedShortestRoute.add(delhiAirport);
+        List<Airport> expectedShortestRoute = createListWith(bangaloreAirport, delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
-        @Test
+    @Test
     public void shouldReturnEmptyListIfThereIsNoRouteAvailable() {
         List<Airport> actualShortestRoute = cochinAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = new LinkedList<Airport>();
+        List<Airport> expectedShortestRoute = Collections.emptyList();
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
-        @Test
-    public void foo() {
-        foo(mysoreAirport, goaAirport, cochinAirport);
-        foo(goaAirport, bombayAirport);
-        foo(bombayAirport, delhiAirport);
-        foo(cochinAirport, delhiAirport);
-        foo(delhiAirport, bangaloreAirport);
+    @Test
+    public void shouldReturnShortestRoute() {
+        setOutgoingAirport(mysoreAirport, goaAirport, cochinAirport);
+        setOutgoingAirport(goaAirport, bombayAirport);
+        setOutgoingAirport(bombayAirport, delhiAirport);
+        setOutgoingAirport(cochinAirport, delhiAirport);
+        setOutgoingAirport(delhiAirport, bangaloreAirport);
         List<Airport> actualShortestRoute = mysoreAirport.getShortestRouteTo(bangaloreAirport);
-        List<Airport> expectedShortestRoute = new LinkedList<Airport>();
-        expectedShortestRoute.add(cochinAirport);
-        expectedShortestRoute.add(delhiAirport);
-        expectedShortestRoute.add(bangaloreAirport);
+        List<Airport> expectedShortestRoute = createListWith(cochinAirport, delhiAirport, bangaloreAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
-    private void foo(Airport airport, Airport... outGoingAirports) {
+    private void setOutgoingAirport(Airport airport, Airport... outGoingAirports) {
         airport.setOutgoingAirports(Arrays.asList(outGoingAirports));
     }
 
@@ -214,6 +188,10 @@ public class AirportTest {
 
     private void shouldReturnListOfAirportIndicatingTheShortestRouteAsReturnedByTheStrategy(List<Airport> expectedRoute, List<Airport> actualRoute) {
         assertEquals(expectedRoute, actualRoute);
+    }
+
+    private List<Airport> createListWith(Airport... airport) {
+        return Arrays.asList(airport);
     }
 
     @After

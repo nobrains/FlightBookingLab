@@ -13,22 +13,22 @@ public class ShortestRoutePlanner implements RoutePlanner {
 
     @Override
     public List<Airport> plan(Airport source, Airport destination) {
-//        String cacheKey = ShortestRouteCacheKeyUtil.getCacheKey(source, destination);
-//        List<Airport> cachedRoute = ShortestRouteCache.get(cacheKey);
-//        if(cachedRoute != null)
-//            return cachedRoute;
         List<Airport> shortestRoute = computeShortestRoute(source, destination);
+        return reverse(shortestRoute);
+    }
+
+    private List<Airport> reverse(List<Airport> shortestRoute) {
         Collections.reverse(shortestRoute);
-//        ShortestRouteCache.put(cacheKey,shortestRoute);
         return shortestRoute;
     }
+
     private List<Airport> computeShortestRoute(Airport source, Airport destination) {
         List<Airport> shortestRoute = new ArrayList<Airport>();
         for (Airport outgoingAirport : source.getOutgoingAirports()) {
             if (destination.equals(outgoingAirport)) {
-                List<Airport> p = new ArrayList<Airport>();
-                p.add(outgoingAirport);
-                return p;
+                List<Airport> route = new ArrayList<Airport>();
+                route.add(outgoingAirport);
+                return route;
             }
             List<Airport> localShortestRoute = computeShortestRoute(outgoingAirport, destination);
             localShortestRoute.add(outgoingAirport);
