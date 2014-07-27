@@ -2,130 +2,92 @@ package com.flightbooking;
 
 import com.flightbooking.planner.*;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.lang.reflect.Field;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertSame;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.powermock.api.mockito.PowerMockito.doNothing;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-/**
- * Created by annarvekar on 7/24/14.
- */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Airport.class, ShortestRouteCache.class})
 public class AirportTest {
-
-//    @Mock
-    private Airport bombayAirport;
-    private Airport delhiAirport;
-    private Airport cochinAirport;
-    private Airport bangaloreAirport;
-    private Airport mysoreAirport;
-    private Airport goaAirport;
-
-    @Before
-    public void setUp() {
-        bombayAirport = new Airport("bom");
-        delhiAirport = new Airport("del");
-        cochinAirport = new Airport("cok");
-        bangaloreAirport = new Airport("blr");
-        mysoreAirport = new Airport("mah");
-        goaAirport = new Airport("goi");
-    }
+    private RouteCache routeCache = mock(InMemoryRouteCache.class);
+    private Airport bombayAirport= new Airport("bom");
+    private Airport delhiAirport= new Airport("del");
+    private Airport cochinAirport= new Airport("cok");
+    private Airport bangaloreAirport= new Airport("blr");
+    private Airport mysoreAirport= new Airport("mah");
+    private Airport goaAirport= new Airport("goi");
 
     @Test
-    public void shouldCheckIfRouteExistsInCache() {
-        PowerMockito.mockStatic(ShortestRouteCache.class);
-        String cacheKey = ShortestRouteCache.createCacheKey(bombayAirport, delhiAirport);
-        when(ShortestRouteCache.get(cacheKey)).thenReturn(null);
-
-        bombayAirport.getShortestRouteTo(delhiAirport);
-
-        verifyStatic(times(1));
-        ShortestRouteCache.get(cacheKey);
-    }
-
-    @Test
-    public void shouldReturnValueInCacheIfExists() {
-        PowerMockito.mockStatic(ShortestRouteCache.class);
-        String cacheKey = ShortestRouteCache.createCacheKey(bombayAirport, delhiAirport);
+    public void returnsCachedValueIfExists() {
+        bombayAirport= new Airport("bom", routeCache);
+        String cacheKey = routeCache.createCacheKey(bombayAirport, delhiAirport);
         List<Airport> expectedRoute = Collections.emptyList();
-        when(ShortestRouteCache.get(cacheKey)).thenReturn(expectedRoute);
+        when(routeCache.get(cacheKey)).thenReturn(expectedRoute);
 
         List<Airport> actualRoute = bombayAirport.getShortestRouteTo(delhiAirport);
 
-        assertEquals(expectedRoute, actualRoute);
+        assertSame(expectedRoute, actualRoute);
     }
 
     @Test
-    public void shouldInsertIntoCacheIfNotPresentAlready() throws Exception {
-        PowerMockito.mockStatic(ShortestRouteCache.class);
-        String cacheKey = ShortestRouteCache.createCacheKey(bombayAirport, delhiAirport);
-        when(ShortestRouteCache.get(cacheKey)).thenReturn(null);
-        doNothing().when(ShortestRouteCache.class, "put", cacheKey, Collections.<Airport>emptyList());
+    public void cacheValuesForFuture() throws Exception {
+        bombayAirport= new Airport("bom", routeCache);
+        String cacheKey = routeCache.createCacheKey(bombayAirport, delhiAirport);
+        when(routeCache.get(cacheKey)).thenReturn(null);
         List<Airport> actualRoute = bombayAirport.getShortestRouteTo(delhiAirport);
-
-        verifyStatic(times(1));
-        ShortestRouteCache.put(cacheKey, actualRoute);
+        verify(routeCache).put(cacheKey, actualRoute);
     }
 
     @Test
     public void shouldReturnShortestRouteWhenDestinationAirportIsDirectlyConnected() {
-        setOutgoingAirport(bombayAirport, delhiAirport);
+        bombayAirport.addFlightTo(delhiAirport);
         List<Airport> actualShortestRoute = bombayAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = createListWith(delhiAirport);
+        List<Airport> expectedShortestRoute = asList(delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
     @Test
     public void shouldReturnShortestRouteWhenSourceHasMultipleOutgoingAirportsOneOfThemBeingTheDestinationAirport() {
-        setOutgoingAirport(bombayAirport, cochinAirport, delhiAirport);
+        bombayAirport.addFlightTo(cochinAirport, delhiAirport);
         List<Airport> actualShortestRoute = bombayAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = createListWith(delhiAirport);
+        List<Airport> expectedShortestRoute = asList(delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
     @Test
     public void shouldReturnShortestRouteWhenThereIsOneIntermediateHopsBetweenSourceAndDestination() {
-        setOutgoingAirport(bombayAirport, delhiAirport);
-        setOutgoingAirport(bangaloreAirport, bombayAirport);
+        bombayAirport.addFlightTo(delhiAirport);
+        bangaloreAirport.addFlightTo(bombayAirport);
         List<Airport> actualShortestRoute = bangaloreAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = createListWith(bombayAirport, delhiAirport);
+        List<Airport> expectedShortestRoute = asList(bombayAirport, delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
     @Test
     public void shouldReturnShortestRouteWhenThereAreMultipleIntermediateHopsBetweenSourceAndDestination() {
-        setOutgoingAirport(bombayAirport, delhiAirport);
-        setOutgoingAirport(bangaloreAirport, bombayAirport);
-        setOutgoingAirport(cochinAirport, bangaloreAirport);
+        bombayAirport.addFlightTo(delhiAirport);
+        bangaloreAirport.addFlightTo(bombayAirport);
+        cochinAirport.addFlightTo(bangaloreAirport);
         List<Airport> actualShortestRoute = cochinAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = createListWith(bangaloreAirport, bombayAirport, delhiAirport);
+        List<Airport> expectedShortestRoute = asList(bangaloreAirport, bombayAirport, delhiAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
     }
 
     @Test
     public void shouldReturnShortestRouteWhenThereAreMultipleRoutesToDestinationAvailable() {
-        setOutgoingAirport(bombayAirport, delhiAirport);
-        setOutgoingAirport(bangaloreAirport, delhiAirport, bombayAirport);
-        setOutgoingAirport(cochinAirport, bangaloreAirport);
+        bombayAirport.addFlightTo(delhiAirport);
+        bangaloreAirport.addFlightTo(delhiAirport, bombayAirport);
+        cochinAirport.addFlightTo(bangaloreAirport);
+
         List<Airport> actualShortestRoute = cochinAirport.getShortestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = createListWith(bangaloreAirport, delhiAirport);
-        assertEquals(expectedShortestRoute, actualShortestRoute);
+
+        assertEquals(asList(bangaloreAirport, delhiAirport), actualShortestRoute);
     }
 
     @Test
@@ -137,46 +99,25 @@ public class AirportTest {
 
     @Test
     public void shouldReturnShortestRoute() {
-        setOutgoingAirport(mysoreAirport, goaAirport, cochinAirport);
-        setOutgoingAirport(goaAirport, bombayAirport);
-        setOutgoingAirport(bombayAirport, delhiAirport);
-        setOutgoingAirport(cochinAirport, delhiAirport);
-        setOutgoingAirport(delhiAirport, bangaloreAirport);
+        mysoreAirport.addFlightTo(goaAirport, cochinAirport);
+        goaAirport.addFlightTo(bombayAirport);
+        bombayAirport.addFlightTo(delhiAirport);
+        cochinAirport.addFlightTo(delhiAirport);
+        delhiAirport.addFlightTo(bangaloreAirport);
         List<Airport> actualShortestRoute = mysoreAirport.getShortestRouteTo(bangaloreAirport);
-        List<Airport> expectedShortestRoute = createListWith(cochinAirport, delhiAirport, bangaloreAirport);
+        List<Airport> expectedShortestRoute = asList(cochinAirport, delhiAirport, bangaloreAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
-    }
-
-    private void setOutgoingAirport(Airport airport, Airport... outGoingAirports) {
-        airport.setOutgoingAirports(Arrays.asList(outGoingAirports));
     }
 
     @Test
     public void testEquals() {
-        shouldBeEqualWhenAirportNamesAreSame();
-        shouldNotBeEqualWhenAirportNamesAreDifferent();
-    }
-
-    private void shouldNotBeEqualWhenAirportNamesAreDifferent() {
-        assertFalse(new Airport("bom").equals(new Airport("del")));
-    }
-
-    private void shouldBeEqualWhenAirportNamesAreSame() {
-        assertTrue(new Airport("del").equals(new Airport("del")));
-    }
-
-    private List<Airport> createListWith(Airport... airport) {
-        return Arrays.asList(airport);
+        Airport del = new Airport("del");
+        assertEquals(del, new Airport("del"));
+        assertFalse(new Airport("bom").equals(del));
     }
 
     @After
-    public void cleanStaticCache() {
-        try {
-            Field field = ShortestRouteCache.class.getDeclaredField("cache");
-            field.setAccessible(true);
-            field.set(null, new ConcurrentHashMap<String, List<Airport>>());
-        } catch (Exception e) {
-        }
+    public void cleanUp(){
+        InMemoryRouteCache.getInstance().flush();
     }
-
 }
