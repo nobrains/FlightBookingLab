@@ -51,16 +51,14 @@ public class AirportTest {
     public void shortestRouteIsDirectFlightsToNeighbouringAirport() {
         bombayAirport.addFlightTo(delhiAirport);
         List<Airport> actualShortestRoute = bombayAirport.getBestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = asList(delhiAirport);
-        assertEquals(expectedShortestRoute, actualShortestRoute);
+        assertEquals(asList(delhiAirport), actualShortestRoute);
     }
 
     @Test
     public void shortestRouteIsDirectFlightsEvenIfThereAreOtherMultiStopFlights() {
         bombayAirport.addFlightTo(cochinAirport, delhiAirport);
         List<Airport> actualShortestRoute = bombayAirport.getBestRouteTo(delhiAirport);
-        List<Airport> expectedShortestRoute = asList(delhiAirport);
-        assertEquals(expectedShortestRoute, actualShortestRoute);
+        assertEquals(asList(delhiAirport), actualShortestRoute);
     }
 
     @Test
@@ -109,6 +107,15 @@ public class AirportTest {
         List<Airport> actualShortestRoute = mysoreAirport.getBestRouteTo(bangaloreAirport);
         List<Airport> expectedShortestRoute = asList(cochinAirport, delhiAirport, bangaloreAirport);
         assertEquals(expectedShortestRoute, actualShortestRoute);
+    }
+
+    @Test
+    public void cacheShouldGetInvalidatedWhenNewAirportsAreAdded() throws Exception {
+        List<Airport> actualShortestRoute = bombayAirport.getBestRouteTo(delhiAirport);
+        assertEquals(Collections.<Airport>emptyList(), actualShortestRoute);
+        bombayAirport.addFlightTo(cochinAirport, delhiAirport);
+        actualShortestRoute = bombayAirport.getBestRouteTo(delhiAirport);
+        assertEquals(asList(delhiAirport), actualShortestRoute);
     }
 
     @Test
