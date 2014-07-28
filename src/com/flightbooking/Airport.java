@@ -1,46 +1,64 @@
 package com.flightbooking;
 
-import com.flightbooking.planner.ShortestRouteCache;
-import com.flightbooking.planner.ShortestRoutePlanner;
+import com.flightbooking.planner.InMemoryRouteCache;
+import com.flightbooking.planner.RouteCache;
+import com.flightbooking.planner.RoutePlanner;
 
 import java.util.*;
 
-/**
- * Created by annarvekar on 7/25/14.
- */
-public class Airport {
-    private final String airportName;
-    private List<Airport> outgoingAirports = new ArrayList<Airport>();
+import static java.util.Arrays.asList;
 
-    public Airport(String airportName) {
-        this.airportName = airportName;
+public class Airport {
+    private final String airportCode;
+    private final RouteCache routeCache;
+    private final RoutePlanner routePlanner;
+    private final List<Airport> neighbours = new ArrayList<Airport>();
+
+    public Airport(String airportCode) {
+        this(airportCode, InMemoryRouteCache.getInstance(), RoutePlanner.SHORTEST);
     }
 
-    public List<Airport> getShortestRouteTo(Airport destinationAirport) {
+    public Airport(String airportCode, RouteCache routeCache, RoutePlanner routePlanner) {
+        this.airportCode = airportCode;
+        this.routeCache = routeCache;
+        this.routePlanner = routePlanner;
+    }
 
-        String cacheKey = ShortestRouteCache.createCacheKey(this, destinationAirport);
-        List<Airport> cachedRoute = ShortestRouteCache.get(cacheKey);
+    public void addFlightTo(Airport... airports) {
+        this.neighbours.addAll(Arrays.asList(airports));
+    }
+
+    public List<Airport> getBestRouteTo(Airport destinationAirport) {
+        String cacheKey = routeCache.createCacheKey(this.airportCode, destinationAirport.airportCode);
+        List<Airport> cachedRoute = routeCache.get(cacheKey);
         if (cachedRoute != null)
             return cachedRoute;
-        List<Airport> shortestRoute = new ShortestRoutePlanner().plan(this, destinationAirport);
-        ShortestRouteCache.put(cacheKey,shortestRoute);
-        return shortestRoute;
+        List<Airport> bestRoute = computeBestRoute(this, destinationAirport);
+        Collections.reverse(bestRoute);
+        routeCache.put(cacheKey, bestRoute);
+        return bestRoute;
     }
 
-    public void setOutgoingAirports(List<Airport> outgoingAirports) {
-        this.outgoingAirports = outgoingAirports;
+    private List<Airport> computeBestRoute(Airport source, Airport destination) {
+        List<Airport> bestRoute = new ArrayList<Airport>();
+        for (Airport neighbour : source.neighbours) {
+            if (destination.equals(neighbour))
+                return new ArrayList<Airport>(asList(neighbour));
+            List<Airport> localBestRoute = computeBestRoute(neighbour, destination);
+            localBestRoute.add(neighbour);
+
+            bestRoute = routePlanner.best(bestRoute, localBestRoute);
+        }
+        return bestRoute;
     }
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Airport && ((Airport) obj).airportName.equals(this.airportName);
+        return obj instanceof Airport && ((Airport) obj).airportCode.equals(this.airportCode);
     }
 
-    public List<Airport> getOutgoingAirports() {
-        return outgoingAirports;
-    }
-
-    public String getAirportName() {
-        return airportName;
+    @Override
+    public String toString() {
+        return airportCode;
     }
 }
