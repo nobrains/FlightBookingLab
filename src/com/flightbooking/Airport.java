@@ -25,6 +25,7 @@ public class Airport {
     }
 
     public void addFlightTo(Airport... airports) {
+        routeCache.flush();
         this.neighbours.addAll(Arrays.asList(airports));
     }
 
